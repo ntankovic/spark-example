@@ -1,0 +1,12 @@
+params:
+
+
+paths:
+  member_transactions:
+    path: "spex/data/tx.csv"
+    sep: ";"
+    format: "csv"
+  member_info:
+    path: "spex/data/members.csv"
+    sep: ","
+    format: "csv"
