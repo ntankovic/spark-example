@@ -1,12 +1,14 @@
 params:
-
+  run_date: "auto"
 
 paths:
   member_transactions:
-    path: "spex/data/tx.csv"
+    path: "./data/tx.csv"
     sep: ";"
     format: "csv"
   member_info:
-    path: "spex/data/members.csv"
+    path: "./data/members.csv"
     sep: ","
     format: "csv"
+  out:
+    path: "s3://bla/out/archive/year={year}/month={month}/"

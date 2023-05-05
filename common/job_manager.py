@@ -1,3 +1,5 @@
+import datetime as dt
+
 import yaml
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
@@ -9,6 +11,7 @@ class JobManager:
             self.config = yaml.load(file, Loader=yaml.FullLoader)
 
         self.env = env
+        self.run_date = dt.datetime.now()
         self.sc = SparkContext.getOrCreate()
         self.spark = SparkSession.builder.appName("spex-app").getOrCreate()
 
@@ -31,3 +34,22 @@ class JobManager:
             df = self.spark.read.parquet(table_info["path"])
 
         return df
+
+    def get_run_date(self):
+        """
+        Return the current run date w.r.t. config run_date
+
+        Args:
+        Returns:
+            (dt.datetime) - current run date
+        """
+
+        config_run_date = self.config.get("params", {}).get("run_date", "auto")
+
+        run_date = (
+            self.run_date
+            if config_run_date == "auto"
+            else dt.datetime.strptime(config_run_date, "%Y-%m-%d")
+        )
+
+        return run_date
